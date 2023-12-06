@@ -9,8 +9,10 @@ body {
     width: 100vw;
     background-color: coral;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 16px;
 }
 
 /* layout styles */
@@ -51,7 +53,7 @@ input {
     gap: 32px;
 }
 
-.buttons button { 
+button { 
     border-radius: 5px;
 }
 
@@ -83,7 +85,7 @@ button.search-btn {
     font-weight: bold;
 }
 
-.output {
+.output, .output-header {
     font-size: 20px;
 }
 
