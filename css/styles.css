@@ -7,32 +7,52 @@
 body {
     height: 100vh;
     width: 100vw;
+    background-color: coral;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* layout styles */
 .container {
     display: flex;
+    width: 40%;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
     justify-content: center;
     align-items: center;
     gap: 16px;
+    background-color: #E3DFFF;
+    padding: 16px;
+    border-radius: 10px;
 }
 
 .inputs {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 30%;
 }
 
-.input input {
+.needle-container {
+    display: flex;
+    gap: 32px;
+}
+
+.needle-container input {
+    width: 10%;
+}
+
+input {
     height: 25px;
 }
 
 .buttons {
     display: flex;
     gap: 32px;
+}
+
+.buttons button { 
+    border-radius: 5px;
 }
 
 .output-area {
@@ -61,5 +81,9 @@ button.all-btn {
 
 button.search-btn {
     font-weight: bold;
+}
+
+.output {
+    font-size: 20px;
 }
 
