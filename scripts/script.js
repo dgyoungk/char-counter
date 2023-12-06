@@ -63,11 +63,7 @@ const resetArea = getResetContainer();
             output.textContent = "The haystack is empty";
         } else {
             for (const char of haystack.value) {
-                if (!result[char]) {
-                    result[char] = 1;
-                } else {
-                    result[char]++;
-                }
+                !result[char] ? result[char] = 1 : result[char]++;
             }
         }
         for (const char in result) {
