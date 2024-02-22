@@ -36,34 +36,32 @@ const resetArea = getResetContainer();
 
 (function searchForNeedle() {
     search.addEventListener('click', () => {
-        if (output.textContent) {
-            output.textContent = '';
-        }
+        resetOutput(output);
+        let result = {};
         if (!needle.value || !haystack.value) {
-            output.textContent = "The search can't be done without a haystack or a needle";
-            !needle.value ? haystack.value = '' : needle.value = '';
+            output.textContent = "The search cannot be done without a haystack or a needle";
+            // !needle.value ? haystack.value = '' : needle.value = '';
+            clearInputs();
         } else {
-            let result = {};
             for (const char of haystack.value) {
                 if (char === needle.value) {
                     !result[char] ? result[char] = 1 : result[char]++;
                 }
             }
-            output.textContent += `\n${needle.value}: ${result[needle.value]}`;
+            createOutput(output, needle.value, result);
         }
         promptReset();
     });
-
 })();
 
 (function displayAllCounts() {
     totalCount.addEventListener('click', () => {
         // use for in loop to iterate over the object created
         let result = {};
+        resetOutput(output);
         if (!haystack.value) {
             output.textContent = "The haystack is empty";
-        } else if (output.textContent && needle.value) {
-            output.textContent = '';
+        } else if (needle.value) {
             needle.value = '';
         }
         for (const char of haystack.value) {
@@ -71,18 +69,33 @@ const resetArea = getResetContainer();
                 !result[char] ? result[char] = 1 : result[char]++;
             }
         }
-        if (output.textContent) {
-            output.textContent = '';
-        }
-        for (const char in result) {
-            output.textContent += `${char}: ${result[char]}, `;
-        }
-        if (!output.textContent.includes('empty')) {
-            output.textContent = output.textContent.slice(0, output.textContent.length - 2) + '.'
-        }
+        createOutput(output, '', result);
         promptReset();
     })
 })();
+
+function resetOutput(output) {
+    if (output.textContent) {
+        output.textContent = '';
+    }
+}
+
+function clearInputs() {
+    haystack.value = '';
+    needle.value = '';
+}
+
+function createOutput(output, key = '', hash) {
+    if (Object.keys(hash).length > 1) {
+        for (const char in hash) {
+            output.textContent += `${char}: ${hash[char]}, `;
+        }
+        output.textContent = output.textContent.slice(0, output.textContent.length - 2) + '.'
+    } else {
+        output.textContent += `${key}: ${hash[key]}`;
+    }
+
+}
 
 function promptReset() {
     if (output.textContent && !document.body.contains(getResetButton())) {
@@ -97,9 +110,9 @@ function promptReset() {
 function attachResetEvent() {
     const reset = getResetButton();
     reset.addEventListener('click', () => {
+        output.textContent = '';
         haystack.value = '';
         needle.value = '';
-        output.textContent = '';
         if (document.body.contains(reset)) {
             resetArea.removeChild(reset);
         }
