@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="./scripts/script.js" defer></script>
     <title>Character Counter</title>
 </head>
+
 <body>
     <!-- 
         TODO: 
@@ -17,13 +19,13 @@
     <div class="container">
         <div class="inputs">
             <label for="haystack" class="haystack">Haystack</label>
-            <input type="text" name="haystack" class="haystack" placeholder="string to search">
+            <input type="text" id="haystack" class="haystack" placeholder="string to search">
 
             <div class="needle-container">
                 <label for="needle" class="needle">Needle</label>
-                <input type="text" name="needle" class="needle">
+                <input type="text" id="needle" class="needle">
             </div>
-            
+
         </div>
         <div class="buttons">
             <button class="search-btn">Search</button>
@@ -36,4 +38,5 @@
         <div class="reset-area"></div>
     </div>
 </body>
+
 </html>

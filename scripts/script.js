@@ -36,6 +36,9 @@ const resetArea = getResetContainer();
 
 (function searchForNeedle() {
     search.addEventListener('click', () => {
+        if (output.textContent) {
+            output.textContent = '';
+        }
         if (!needle.value || !haystack.value) {
             output.textContent = "The search can't be done without a haystack or a needle";
             !needle.value ? haystack.value = '' : needle.value = '';
@@ -43,16 +46,14 @@ const resetArea = getResetContainer();
             let result = {};
             for (const char of haystack.value) {
                 if (char === needle.value) {
-                    result[char] ? result[char]++ : result[char] = 1;
-                } else {
-                    result[needle.value] = 0;
+                    !result[char] ? result[char] = 1 : result[char]++;
                 }
             }
             output.textContent += `\n${needle.value}: ${result[needle.value]}`;
         }
         promptReset();
     });
-    
+
 })();
 
 (function displayAllCounts() {
@@ -61,25 +62,30 @@ const resetArea = getResetContainer();
         let result = {};
         if (!haystack.value) {
             output.textContent = "The haystack is empty";
-        } else {
-            for (const char of haystack.value) {
+        } else if (output.textContent && needle.value) {
+            output.textContent = '';
+            needle.value = '';
+        }
+        for (const char of haystack.value) {
+            if (char.match(/^[A-Za-z]+$/)) {
                 !result[char] ? result[char] = 1 : result[char]++;
             }
         }
+        if (output.textContent) {
+            output.textContent = '';
+        }
         for (const char in result) {
-            output.textContent += `${char}: ${result[char]}, `;   
+            output.textContent += `${char}: ${result[char]}, `;
         }
         if (!output.textContent.includes('empty')) {
             output.textContent = output.textContent.slice(0, output.textContent.length - 2) + '.'
         }
         promptReset();
     })
-
-    
 })();
 
 function promptReset() {
-    if (output.textContent) {
+    if (output.textContent && !document.body.contains(getResetButton())) {
         const resetBtn = document.createElement('button');
         resetBtn.classList.add('reset-btn');
         resetBtn.innerText = 'Reset';
@@ -94,6 +100,8 @@ function attachResetEvent() {
         haystack.value = '';
         needle.value = '';
         output.textContent = '';
-        resetArea.removeChild(reset);
+        if (document.body.contains(reset)) {
+            resetArea.removeChild(reset);
+        }
     });
 }
